@@ -35,11 +35,13 @@ public class PlayerAttackingState : PlayerBaseState
             {
                 TryApplyForce();
             }
-
-            if (stateMachine.InputReader.IsAttacking)
+            if (stateMachine.isCombo)
             {
-                TryComboAttack(normalizedTime);
+                if (stateMachine.InputReader.IsAttacking)
+                    TryComboAttack(normalizedTime);
+                
             }
+           
         }
         else
         {

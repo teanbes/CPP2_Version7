@@ -17,6 +17,8 @@ public class EnemyDeadState : EnemyBaseState
         stateMachine.Ragdoll.ToggleRagdoll(true);
         stateMachine.Weapon.gameObject.SetActive(false);
         GameObject.Destroy(stateMachine.Target);
+        stateMachine.DeathParticles.SetActive(true);
+
 
     }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,6 +23,8 @@ public class PlayerFreeLookState : PlayerBaseState
     {
         stateMachine.InputReader.TargetEvent += OnTarget;
         stateMachine.InputReader.JumpEvent += OnJump;
+        stateMachine.InputReader.ShootEvent += OnShoot;
+
 
         stateMachine.Animator.SetFloat(FreeLookSpeedHash, 0f);
 
@@ -35,12 +38,17 @@ public class PlayerFreeLookState : PlayerBaseState
         }
     }
 
+    
     public override void Tick(float deltaTime)
     {
-        if (stateMachine.InputReader.IsAttacking)
+        if (stateMachine.isWeapon)
         {
-            stateMachine.SwitchState(new PlayerAttackingState(stateMachine, 0));
-            return;
+            if (stateMachine.InputReader.IsAttacking)
+            {
+                stateMachine.SwitchState(new PlayerAttackingState(stateMachine, 0));
+                return;
+            }
+
         }
 
         Vector3 movement = CalculateMovement();
@@ -56,12 +64,17 @@ public class PlayerFreeLookState : PlayerBaseState
         stateMachine.Animator.SetFloat(FreeLookSpeedHash, 1, AnimatorDampTime, deltaTime);
 
         FaceMovementDirection(movement, deltaTime);
+
+
+
+
     }
 
     public override void Exit()
     {
         stateMachine.InputReader.TargetEvent -= OnTarget;
         stateMachine.InputReader.JumpEvent -= OnJump;
+        stateMachine.InputReader.ShootEvent -= OnShoot;
     }
 
     private void OnTarget()
@@ -71,10 +84,18 @@ public class PlayerFreeLookState : PlayerBaseState
         stateMachine.SwitchState(new PlayerTargetingState(stateMachine));
     }
 
+
     private void OnJump()
     {
         stateMachine.SwitchState(new PlayerJumpingState(stateMachine));
     }
+
+    private void OnShoot()
+    {
+        if(stateMachine.isSpell)
+            stateMachine.SwitchState(new PlayerShootingState(stateMachine));
+    }
+
 
     private Vector3 CalculateMovement()
     {

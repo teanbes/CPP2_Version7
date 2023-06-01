@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 23000012010543580}
   - component: {fileID: 114000010554635110}
   - component: {fileID: -2719652444536278624}
-  - component: {fileID: -4204062367652335846}
+  - component: {fileID: 4292724131923785898}
   m_Layer: 0
   m_Name: HardStar
   m_TagString: collectible
@@ -123,7 +123,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.1296964, y: 0.5992532, z: 2.9765193}
   m_Center: {x: -0.00000017881393, y: -0.00055719924, z: 0.15712135}
---- !u!114 &-4204062367652335846
+--- !u!114 &4292724131923785898
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -132,6 +132,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000010694622314}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f15b70a44a3bf3742b5aa064581521fd, type: 3}
+  m_Script: {fileID: 11500000, guid: 6fdbe415bd7641a47905bd86ca700d2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

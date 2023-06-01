@@ -25,20 +25,24 @@ public class PlayerTargetingState : PlayerBaseState
 
     public override void Tick(float deltaTime)
     {
-        if (stateMachine.InputReader.IsAttacking)
+        if (stateMachine.isWeapon)
         {
-            stateMachine.SwitchState(new PlayerAttackingState(stateMachine, 0));
-            return;
-        }
-        if (stateMachine.InputReader.IsBlocking)
-        {
-            stateMachine.SwitchState(new PlayerBlockingState(stateMachine));
-            return;
-        }
-        if (stateMachine.Targeter.CurrentTarget == null)
-        {
-            stateMachine.SwitchState(new PlayerFreeLookState(stateMachine));
-            return;
+            if (stateMachine.InputReader.IsAttacking)
+            {
+                stateMachine.SwitchState(new PlayerAttackingState(stateMachine, 0));
+                return;
+            }
+            if (stateMachine.InputReader.IsBlocking)
+            {
+                stateMachine.SwitchState(new PlayerBlockingState(stateMachine));
+                return;
+            }
+            if (stateMachine.Targeter.CurrentTarget == null)
+            {
+                stateMachine.SwitchState(new PlayerFreeLookState(stateMachine));
+                return;
+            }
+
         }
 
         Vector3 movement = CalculateMovement(deltaTime);

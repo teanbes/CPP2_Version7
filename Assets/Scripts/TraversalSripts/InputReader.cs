@@ -13,7 +13,8 @@ public class InputReader : MonoBehaviour, Controls.IPlayerActions
     public event Action JumpEvent;
     public event Action DodgeEvent;
     public event Action TargetEvent;
-    
+    public event Action ShootEvent;
+
 
     private Controls controls;
 
@@ -25,10 +26,10 @@ public class InputReader : MonoBehaviour, Controls.IPlayerActions
         controls.Player.Enable();
     }
 
-    private void OnDestroy()
+   /* private void OnDestroy()
     {
-        controls.Player.Disable();
-    }
+        //controls.Player.Disable();
+    }*/
 
     public void OnJump(InputAction.CallbackContext context)
     {
@@ -88,5 +89,12 @@ public class InputReader : MonoBehaviour, Controls.IPlayerActions
     public void OnCancel(InputAction.CallbackContext context)
     {
         
+    }
+
+    public void OnShoot(InputAction.CallbackContext context)
+    {
+        if (!context.performed) { return; }
+
+        ShootEvent?.Invoke();
     }
 }

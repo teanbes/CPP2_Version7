@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 372765752535498177}
   - component: {fileID: 372765752538398177}
   - component: {fileID: 372765752537268001}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CliffBig02_LOD02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 372765752535498179}
   - component: {fileID: 372765752538398179}
   - component: {fileID: 372765752537268003}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CliffBig02_LOD01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,8 @@ GameObject:
   - component: {fileID: 372765752535498181}
   - component: {fileID: 372765752538398181}
   - component: {fileID: 372765752537268005}
-  m_Layer: 0
+  - component: {fileID: 1858182475}
+  m_Layer: 3
   m_Name: CliffBig02_LOD00
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,14 +192,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 372765752535065061}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 7, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 372765752535498183}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!33 &372765752538398181
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -217,7 +218,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
+  m_DynamicOccludee: 0
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
@@ -249,6 +250,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &1858182475
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 372765752535065061}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300002, guid: 4c27bf02daa2a7248821d10516e3a864, type: 3}
 --- !u!1 &372765752535065063
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,7 +274,7 @@ GameObject:
   m_Component:
   - component: {fileID: 372765752535498183}
   - component: {fileID: 372765752554547559}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CliffBig02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -275,7 +290,7 @@ Transform:
   m_GameObject: {fileID: 372765752535065063}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 5.0121818, y: 5.0121818, z: 5.0121818}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 372765752535498181}

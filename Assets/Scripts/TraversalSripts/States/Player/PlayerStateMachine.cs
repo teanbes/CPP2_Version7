@@ -20,12 +20,26 @@ public class PlayerStateMachine : StateMachine
     [field: SerializeField] public float DodgeLength { get; private set; }
     [field: SerializeField] public float JumpForce { get; private set; }
     [field: SerializeField] public Attack[] Attacks { get; private set; }
+    [field: SerializeField] public GameObject aura;
+    [field: SerializeField] public GameObject DeathParticles { get; private set; }
 
+    [HideInInspector] public bool isSpell;
+    [HideInInspector] public bool isWeapon;
+    [HideInInspector] public bool isCombo;
+   
     public float PreviousDodgeTime { get; private set; } = Mathf.NegativeInfinity;
     public Transform MainCameraTransform { get; private set; }
 
     private void Start()
     {
+        // Initial weapon state
+        isWeapon = false;
+        // Initial spell state
+        isSpell = false;
+        // Initial combo state
+        isCombo = false;
+
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
@@ -37,12 +51,14 @@ public class PlayerStateMachine : StateMachine
     private void OnEnable()
     {
         Health.OnTakeDamage += HandleTakeDamage;
+        Health.OnIncreaseHealth += HandleHealthIncrease;
         Health.OnDie += HandleDie;
     }
 
     private void OnDisable()
     {
         Health.OnTakeDamage -= HandleTakeDamage;
+        Health.OnIncreaseHealth -= HandleHealthIncrease;
         Health.OnDie -= HandleDie;
     }
 
@@ -51,8 +67,16 @@ public class PlayerStateMachine : StateMachine
         SwitchState(new PlayerImpactState(this));
     }
 
+    private void HandleHealthIncrease() 
+    {
+        SwitchState(new PlayerGetsSpellPower(this)); 
+    }
+
+
     private void HandleDie()
     {
         SwitchState(new PlayerDeadState(this));
     }
+
+   
 }

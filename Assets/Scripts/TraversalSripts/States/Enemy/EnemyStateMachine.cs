@@ -20,6 +20,7 @@ public class EnemyStateMachine : StateMachine
     [field: SerializeField] public float AttackRange { get; private set; }
     [field: SerializeField] public int AttackDamage { get; private set; }
     [field: SerializeField] public int AttackKnockback { get; private set; }
+    [field: SerializeField] public GameObject DeathParticles { get; private set; }
 
     //Vars for anemy path
     [field: SerializeField] public Transform PathTarget;
@@ -53,11 +54,7 @@ public class EnemyStateMachine : StateMachine
     }
    
 
-    /*private IEnumerator FindPlayer()
-    {
-        yield return new WaitForSeconds(1f); // wait for 1 second
-        
-    }*/
+   
 
     private void OnEnable()
     {

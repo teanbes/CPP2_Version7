@@ -1,32 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [DefaultExecutionOrder(-1)]
-public class GameManager : Singleton<GameManager>
+public class GameManager : MonoBehaviour
 {
-    [HideInInspector]
-    public PlayerInput playerActions;
+    private static GameManager _instance = null;
 
-    
-    protected override void Awake()
+    public static GameManager Instance
     {
-        base.Awake();
-        playerActions = new PlayerInput();
-
-
+        get => _instance;
     }
 
-    private void OnEnable()
-    {
-        playerActions.Enable();
-    }
+    public PlayerStateMachine playerPrefab;
+    [HideInInspector] public PlayerStateMachine playerInstance = null;
+    [HideInInspector] public Transform currentSpawnPoint;
 
-    private void OnDisable()
+    private void Awake()
     {
-        playerActions.Disable();
-    }
+        if (_instance)
+        {
+            Destroy(gameObject);
+            return;
+        }
 
+        _instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
 
 
     // Start is called before the first frame update
@@ -38,26 +39,18 @@ public class GameManager : Singleton<GameManager>
     // Update is called once per frame
     void Update()
     {
-        
+    
+      
     }
 
 
-    //Vars for MousePos()
-    public GameObject playerPrefab;
-    [HideInInspector] public GameObject playerInstance = null;
-    [HideInInspector] public Transform currentSpawnPoint;
-
-    public Ray MousePos()
-    {
-        Vector3 screenSpacePos = playerActions.Player.Look.ReadValue<Vector2>();
-        return Camera.main.ScreenPointToRay(screenSpacePos);
-        
-    }
 
     public void SpawnPlayer(Transform spawnPoint)
     {
-        playerInstance = Instantiate(playerPrefab, spawnPoint.transform, false);
+        playerInstance = Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);
         currentSpawnPoint = spawnPoint;
+
+        
     }
 
     public void Respawn()

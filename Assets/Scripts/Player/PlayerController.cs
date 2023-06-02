@@ -7,10 +7,10 @@ using static UnityEngine.GraphicsBuffer;
 
 
 //[RequireComponent(typeof(Rigidbody))]
-[DefaultExecutionOrder(1)]
+//[DefaultExecutionOrder(1)]
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 10.0f;
+    /*public float moveSpeed = 10.0f;
     public float jumpSpeed = 500.0f;
 
     Rigidbody rb;
@@ -150,7 +150,7 @@ public class PlayerController : MonoBehaviour
 
    
 
-    public void Move(InputAction.CallbackContext ctx)
+   /* public void Move(InputAction.CallbackContext ctx)
     {
         if(ctx.canceled)
         {
@@ -182,4 +182,4 @@ public class PlayerController : MonoBehaviour
         
 
     }
-}
+}*/

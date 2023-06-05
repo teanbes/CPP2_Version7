@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using RPG.Saving;
 
-public class PlayerStateMachine : StateMachine
+public class PlayerStateMachine : StateMachine, ISaveable
 {
     [field: SerializeField] public InputReader InputReader { get; private set; }
     [field: SerializeField] public CharacterController Controller { get; private set; }
@@ -10,7 +11,7 @@ public class PlayerStateMachine : StateMachine
     [field: SerializeField] public Targeter Targeter { get; private set; }
     [field: SerializeField] public ForceReceiver ForceReceiver { get; private set; }
     [field: SerializeField] public WeaponDamage Weapon { get; private set; }
-    [field: SerializeField] public Health Health { get; private set; }
+   
     [field: SerializeField] public Ragdoll Ragdoll { get; private set; }
     [field: SerializeField] public LedgeDetector LedgeDetector { get; private set; }
     [field: SerializeField] public float FreeLookMovementSpeed { get;  set; }
@@ -22,13 +23,20 @@ public class PlayerStateMachine : StateMachine
     [field: SerializeField] public Attack[] Attacks { get; private set; }
     [field: SerializeField] public GameObject aura;
     [field: SerializeField] public GameObject DeathParticles { get; private set; }
+    [field: SerializeField] public GameObject gameOverPanel;
+    [field: SerializeField] public GameObject Sword;
 
     [HideInInspector] public bool isSpell;
     [HideInInspector] public bool isWeapon;
     [HideInInspector] public bool isCombo;
-   
+    [HideInInspector] public bool isSaved;
+
+
     public float PreviousDodgeTime { get; private set; } = Mathf.NegativeInfinity;
     public Transform MainCameraTransform { get; private set; }
+
+    [field: SerializeField] public Health Health;
+    public int playerhealth;
 
     private void Start()
     {
@@ -38,13 +46,29 @@ public class PlayerStateMachine : StateMachine
         isSpell = false;
         // Initial combo state
         isCombo = false;
+        // Initial player state
+        isSaved = GameManager.StateManager.gameState.player.isSaved;
+
+        if (isSaved) 
+        {
+            Debug.Log("el archivo esta salvado");
+            LoadGameComplete();
+            
+            GameManager.Instance.LoadGame();
+            Health.HealthBarHandler();
 
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        }
+
+        if (isWeapon) 
+        {
+            Sword.SetActive(true);
+        }
+        
 
         MainCameraTransform = Camera.main.transform;
 
+       
         SwitchState(new PlayerFreeLookState(this));
     }
 
@@ -78,5 +102,82 @@ public class PlayerStateMachine : StateMachine
         SwitchState(new PlayerDeadState(this));
     }
 
-   
+    // Function called when saving game
+    public void SaveGamePrepare()
+    {
+        // Get Player Data Object
+        LoadSaveManager.GameStateData.DataPlayer data = GameManager.StateManager.gameState.player;
+
+        // Fill in player data for save game
+        data.isSaved = true;
+        data.collectedSpell = isSpell;
+        data.collectedSword = isWeapon;
+        data.collectedCombo = isCombo;
+        data.health = Health.health;
+
+        data.posRotScale.posX = transform.position.x;
+        data.posRotScale.posY = transform.position.y;
+        data.posRotScale.posZ = transform.position.z;
+
+        data.posRotScale.rotX = transform.localEulerAngles.x;
+        data.posRotScale.rotY = transform.localEulerAngles.y;
+        data.posRotScale.rotZ = transform.localEulerAngles.z;
+
+        data.posRotScale.scaleX = transform.localScale.x;
+        data.posRotScale.scaleY = transform.localScale.y;
+        data.posRotScale.scaleZ = transform.localScale.z;
+
+
+
+    }
+
+    // Function called when loading is complete
+    public void LoadGameComplete()
+    {
+        // Get Player Data Object
+        LoadSaveManager.GameStateData.DataPlayer data =
+            GameManager.StateManager.gameState.player;
+
+        // Load data back to Player
+        isSpell = data.collectedSpell;
+        isWeapon = data.collectedSword;
+        isCombo =  data.collectedCombo;
+        Health.health = data.health;
+        Health.HealthBarHandler();
+
+
+        // Set position
+
+        Controller.enabled = false;
+        transform.position = new Vector3(data.posRotScale.posX,
+            data.posRotScale.posY, data.posRotScale.posZ);
+        Controller.enabled = true;
+
+        
+        // Set rotation
+        transform.rotation = Quaternion.Euler(data.posRotScale.rotX,
+            data.posRotScale.rotY, data.posRotScale.rotZ);
+
+        // Set scale
+        transform.localScale = new Vector3(data.posRotScale.scaleX,
+            data.posRotScale.scaleY, data.posRotScale.scaleZ);
+
+       
+    }
+
+    public object CaptureState()
+    {
+        return new SerializableVector3(transform.position);
+    }
+
+    public void RestoreState(object state)
+    {
+        SerializableVector3 position = (SerializableVector3)state;
+        transform.position = position.ToVector();
+    }
+
+    public void DestroyObjectOnDeath()
+    {
+        Destroy(this);
+    }
 }

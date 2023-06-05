@@ -13,6 +13,7 @@ TagManager:
   - LavaCollider
   - Fire
   - FireCollider
+  - Enemy
   layers:
   - Default
   - TransparentFX

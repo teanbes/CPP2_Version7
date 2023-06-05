@@ -64,10 +64,9 @@ public class PlayerFreeLookState : PlayerBaseState
         stateMachine.Animator.SetFloat(FreeLookSpeedHash, 1, AnimatorDampTime, deltaTime);
 
         FaceMovementDirection(movement, deltaTime);
+        
 
-
-
-
+       
     }
 
     public override void Exit()
@@ -119,4 +118,6 @@ public class PlayerFreeLookState : PlayerBaseState
             Quaternion.LookRotation(movement),
             deltaTime * stateMachine.RotationDamping);
     }
+
+
 }

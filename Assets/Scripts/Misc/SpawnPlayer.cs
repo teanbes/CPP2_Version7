@@ -9,7 +9,7 @@ public class SpawnPlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameManager.Instance.SpawnPlayer(spawnPoint);
+        //GameManager.Instance.SpawnPlayer(spawnPoint);
     }
 
     // Update is called once per frame

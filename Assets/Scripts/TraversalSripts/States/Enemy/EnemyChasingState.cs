@@ -48,7 +48,7 @@ public class EnemyChasingState : EnemyBaseState
     {
         if (stateMachine.Agent.isOnNavMesh)
         {
-            stateMachine.Agent.destination = stateMachine.Player.transform.position;
+            stateMachine.Agent.destination = stateMachine.player.transform.position;
 
             Move(stateMachine.Agent.desiredVelocity.normalized * stateMachine.MovementSpeed, deltaTime);
         }
@@ -58,9 +58,9 @@ public class EnemyChasingState : EnemyBaseState
 
     private bool IsInAttackRange()
     {
-        if (stateMachine.Player.IsDead) { return false; }
+        if (stateMachine.player.IsDead) { return false; }
 
-        float playerDistanceSqr = (stateMachine.Player.transform.position - stateMachine.transform.position).sqrMagnitude;
+        float playerDistanceSqr = (stateMachine.player.transform.position - stateMachine.transform.position).sqrMagnitude;
 
         return playerDistanceSqr <= stateMachine.AttackRange * stateMachine.AttackRange;
     }

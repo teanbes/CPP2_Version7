@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -17,16 +18,17 @@ public class PlayerDeadState : PlayerBaseState
         stateMachine.Weapon.gameObject.SetActive(false);
         stateMachine.DeathParticles.SetActive(true);
 
-        
-
-        
-            
+          
     }
 
     public override void Tick(float deltaTime) 
     {
         if ((timer -= Time.deltaTime) <=0)
-            SceneManager.LoadScene("GameOverScene");
+        {
+            
+            stateMachine.gameOverPanel.SetActive(true);
+            
+        }
     }
 
     public override void Exit() { }

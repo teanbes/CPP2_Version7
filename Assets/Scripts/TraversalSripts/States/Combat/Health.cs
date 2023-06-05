@@ -11,7 +11,7 @@ public class Health : MonoBehaviour
     [Header("Health Bar Sprites")]
     public RawImage[] healthBar;
 
-    private int health;
+    public int health;
     private bool isInvulnerable;
 
     public event Action OnTakeDamage;
@@ -71,35 +71,55 @@ public class Health : MonoBehaviour
         HealthBarHandler();
     }
 
-    private void HealthBarHandler()
+    public void HealthBarHandler()
     {
         switch (health)
         {
             case 100:
                 healthBar[0].enabled = true;
+                healthBar[1].enabled = true;
+                healthBar[2].enabled = true;
+                healthBar[3].enabled = true;
+                healthBar[4].enabled = true;
                 break;
 
             case 80:
                 healthBar[0].enabled = false;
                 healthBar[1].enabled = true;
+                healthBar[2].enabled = true;
+                healthBar[3].enabled = true;
+                healthBar[4].enabled = true;
                 break;
 
             case 60:
+                healthBar[0].enabled = false;
                 healthBar[1].enabled = false;
                 healthBar[2].enabled = true;
+                healthBar[3].enabled = true;
+                healthBar[4].enabled = true;
                 break;
 
             case 40:
+                healthBar[0].enabled = false;
+                healthBar[1].enabled = false;
                 healthBar[2].enabled = false;
                 healthBar[3].enabled = true;
+                healthBar[4].enabled = true;
                 break;
 
             case 20:
+                healthBar[0].enabled = false;
+                healthBar[1].enabled = false;
+                healthBar[2].enabled = false;
                 healthBar[3].enabled = false;
                 healthBar[4].enabled = true;
                 break;
 
             case 0:
+                healthBar[0].enabled = false;
+                healthBar[1].enabled = false;
+                healthBar[2].enabled = false;
+                healthBar[3].enabled = false;
                 healthBar[4].enabled = false;
 
                 break;

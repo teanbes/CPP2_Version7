@@ -14,6 +14,7 @@ public class PlayerImpactState : PlayerBaseState
 
     public override void Enter()
     {
+        AudioManager.Instance.Play("hurt");
         stateMachine.Animator.CrossFadeInFixedTime(ImpactHash, CrossFadeDuration);
     }
 

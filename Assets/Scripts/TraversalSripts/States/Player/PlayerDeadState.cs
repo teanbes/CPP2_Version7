@@ -27,6 +27,7 @@ public class PlayerDeadState : PlayerBaseState
         {
             
             stateMachine.gameOverPanel.SetActive(true);
+            stateMachine.uiManager.PauseBackgorundMusic();
             
         }
     }

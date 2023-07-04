@@ -1,71 +1,96 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class EnemyVisibility : MonoBehaviour
 {
-    public float maxDistance = 10f;
-    private MeshRenderer enemyRenderer;
-    public float raycastYoffset = 0.5f ;
+    [SerializeField] private float maxDistance;
+    [SerializeField] private float raycastYoffset ;
+    [SerializeField] private Transform PlayerRef ;
+    RaycastHit hit;
 
-    //projectile variables
-    public GameObject bulletPrefab;
-    public float bulletSpeed = 10f;
-    public float shootInterval = 2f;
+    // Projectile variables
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private float bulletSpeed;
+    [SerializeField] private float shootInterval;
+    [SerializeField] private Transform projectileSpawnPoint;
     private float lastShootTime = 0f;
-    public Transform spawnPoint;
 
-    public float transparency = 0.5f;
-    public List<Material> material = new List<Material>();
+    private readonly int Attack01Hash = Animator.StringToHash("Attack01");
+    private const float CrossFadeDuration = 0.1f;
 
+    private FollowPlayer followPlayer;
 
-    void Start()
+    Vector3 direction;
+
+    private void Start()
     {
-        enemyRenderer = GetComponent<MeshRenderer>();
-        
+        followPlayer = GetComponent<FollowPlayer>();
+
+        if (!bulletPrefab)
+            Debug.Log("Set bullet prefab in inspector");
+
+        if (maxDistance <=0f)
+            maxDistance = 10f;
+
+        if (raycastYoffset <= 0f)
+            raycastYoffset = 0.5f;
+
+        if (bulletSpeed <= 0f)
+            bulletSpeed = 10f;
+
+        if (shootInterval <= 0f)
+            shootInterval = 2f;
+
     }
 
-    void Update()
+    private void Update()
     {
-        RaycastHit hit;
-        Vector3 rayCastOrigin = transform.position + new Vector3 (0f, 0f, 0f);
+        
+        //RaycastHit hit;
+        Vector3 rayCastOrigin = transform.position + new Vector3 (0f, -0.5f, 0f);
         // to make raycast only affect on a layer 
         int layermask = 1 << 6;
+        bool tempraycast = Physics.Raycast(rayCastOrigin, transform.forward, out hit, maxDistance, layermask);
 
-        if (Physics.Raycast(rayCastOrigin, transform.forward, out hit, maxDistance, layermask))
+        if (followPlayer.canSeePlayer == true && followPlayer.golemDead == false)
         {
-            Debug.DrawRay(rayCastOrigin, transform.forward * hit.distance, Color.red);
-            if (hit.collider.CompareTag("Player"))
+            if (tempraycast)
             {
-                //enemyRenderer.enabled = true;
-                enemyRenderer.material = material[0];
+                Debug.DrawRay(rayCastOrigin, transform.forward * hit.distance, Color.red);
 
-                if (Time.time - lastShootTime >= shootInterval)
+                if (hit.collider.CompareTag("Player"))
                 {
-                    ShootPlayer(hit.point);
-                    lastShootTime = Time.time;
+
+                    if (Time.time - lastShootTime >= shootInterval)
+                    {
+                        followPlayer.animator.CrossFadeInFixedTime(Attack01Hash, CrossFadeDuration);
+                        //ShootPlayer(hit.point); remove hit.point reference to ShootPlayer() from animation
+
+                        lastShootTime = Time.time;
+                    }
                 }
+
             }
-           /* else
+            else
             {
-                enemyRenderer.enabled = false;
-            }*/
+
+                Debug.DrawRay(rayCastOrigin, transform.forward * maxDistance, Color.blue);
+            }
+
+            direction = (hit.point - transform.position).normalized;
         }
-        else
-        {
-            //enemyRenderer.enabled = false;
-            enemyRenderer.material = material[1];
-            Debug.DrawRay(rayCastOrigin, transform.forward * maxDistance, Color.blue);
-        }
+
     }
 
-    void ShootPlayer(Vector3 playerPosition)
+    public void ShootPlayer()
     {
         // Calculate direction to player
-        Vector3 direction = (playerPosition - transform.position).normalized;
+        Vector3 direction = (hit.point - transform.position).normalized;
 
         // Instantiate bullet and set its position and rotation
-        GameObject bullet = Instantiate(bulletPrefab, spawnPoint.position, Quaternion.LookRotation(direction));
+        GameObject bullet = Instantiate(bulletPrefab, projectileSpawnPoint.position, Quaternion.LookRotation(direction));
 
         // Add force to bullet in direction of player
         bullet.GetComponent<Rigidbody>().AddForce(direction * bulletSpeed, ForceMode.Impulse);

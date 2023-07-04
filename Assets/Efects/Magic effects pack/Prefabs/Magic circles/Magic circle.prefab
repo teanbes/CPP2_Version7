@@ -9710,8 +9710,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7623591545731079591}
   - component: {fileID: 6066263142197237306}
+  - component: {fileID: 105106254}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: StateCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9745,6 +9746,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.66171265, y: 0.35051727, z: 0.5673218}
   m_Center: {x: 0.004043579, y: 0.025241852, z: 0.008666992}
+--- !u!114 &105106254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1763438536010879899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a077cc2b5c87534295e91c36e594138, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stateMachine: {fileID: 0}
 --- !u!1 &3574362967237534929
 GameObject:
   m_ObjectHideFlags: 0
@@ -14752,6 +14766,8 @@ GameObject:
   - component: {fileID: 3650638188812647480}
   - component: {fileID: 797784518864179116}
   - component: {fileID: 5796355061092580784}
+  - component: {fileID: 1128286046}
+  - component: {fileID: 1128286045}
   m_Layer: 0
   m_Name: Magic circle
   m_TagString: Untagged
@@ -19616,6 +19632,34 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!65 &1128286046
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3744133877081091469}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.0203857, y: 2.1300669, z: 2.1690369}
+  m_Center: {x: 0.061767578, y: 1.0750661, z: 0.00944519}
+--- !u!114 &1128286045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3744133877081091469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2412b12d208169d448c13c0daa610eef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameObject1: {fileID: 7673830656541891808}
+  gameObject2: {fileID: 606317162780701244}
+  gameObject3: {fileID: 1089537346222119763}
 --- !u!1 &7673830656541891808
 GameObject:
   m_ObjectHideFlags: 0

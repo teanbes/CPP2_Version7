@@ -48,6 +48,7 @@ public class InputReader : MonoBehaviour, Controls.IPlayerActions
     public void OnMove(InputAction.CallbackContext context)
     {
         MovementValue = context.ReadValue<Vector2>();
+        if (context.performed) {AudioManager.Instance.Play("walk"); }
     }
 
     public void OnLook(InputAction.CallbackContext context)

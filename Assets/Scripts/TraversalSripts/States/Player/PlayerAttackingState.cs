@@ -19,6 +19,7 @@ public class PlayerAttackingState : PlayerBaseState
     {
         stateMachine.Weapon.SetAttack(attack.Damage, attack.Knockback);
         stateMachine.Animator.CrossFadeInFixedTime(attack.AnimationName, attack.TransitionDuration);
+        AudioManager.Instance.Play("swoosh");
     }
 
     public override void Tick(float deltaTime)

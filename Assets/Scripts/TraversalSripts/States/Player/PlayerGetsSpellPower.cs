@@ -15,8 +15,11 @@ public class PlayerGetsSpellPower : PlayerBaseState
     public override void Enter()
     {
         stateMachine.isSpell = true;
+        AudioManager.Instance.Stop("walk");
+        AudioManager.Instance.Play("Healing");
+        stateMachine.Health.health = 100;
+        stateMachine.Health.HealthBarHandler();
         stateMachine.Animator.CrossFadeInFixedTime(PowerUpHash, CrossFadeDuration);
-
     }
 
     public override void Tick(float deltaTime)

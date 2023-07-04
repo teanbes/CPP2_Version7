@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class EnemyChasingState : EnemyBaseState
@@ -21,8 +22,10 @@ public class EnemyChasingState : EnemyBaseState
     {
         if (!IsInChaseRange())
         {
-            //stateMachine.SwitchState(new EnemyIdleState(stateMachine)); when iddle needed
-            stateMachine.SwitchState(new EnemyPatrollingState(stateMachine));
+            if (!stateMachine.IsPatrolling)
+                stateMachine.SwitchState(new EnemyIdleState(stateMachine));
+            if (stateMachine.IsPatrolling)
+                stateMachine.SwitchState(new EnemyPatrollingState(stateMachine));
             return;
         }
         else if (IsInAttackRange())

@@ -93,6 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 81089786967173730}
   - component: {fileID: 81089786951630530}
+  - component: {fileID: 2573019392316436649}
   m_Layer: 0
   m_Name: VegetationLarge04
   m_TagString: Untagged
@@ -145,6 +146,19 @@ LODGroup:
     renderers:
     - renderer: {fileID: 81089786968942724}
   m_Enabled: 1
+--- !u!65 &2573019392316436649
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 81089786966750786}
+  m_Material: {fileID: 13400000, guid: b01be89efa5136245bd26dfedb3e94dd, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.8194394, y: 5.127547, z: 2.1532853}
+  m_Center: {x: 0.07587409, y: 2.519018, z: 0.09104884}
 --- !u!1 &81089786966750788
 GameObject:
   m_ObjectHideFlags: 0

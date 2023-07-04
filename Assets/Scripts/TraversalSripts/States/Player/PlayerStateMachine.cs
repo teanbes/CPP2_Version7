@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using RPG.Saving;
 
-public class PlayerStateMachine : StateMachine, ISaveable
+
+public class PlayerStateMachine : StateMachine
 {
     [field: SerializeField] public InputReader InputReader { get; private set; }
     [field: SerializeField] public CharacterController Controller { get; private set; }
@@ -26,10 +26,16 @@ public class PlayerStateMachine : StateMachine, ISaveable
     [field: SerializeField] public GameObject gameOverPanel;
     [field: SerializeField] public GameObject Sword;
 
+    [field: SerializeField] public UIManager uiManager;
+
     [HideInInspector] public bool isSpell;
     [HideInInspector] public bool isWeapon;
     [HideInInspector] public bool isCombo;
     [HideInInspector] public bool isSaved;
+
+    [HideInInspector] public bool RandomEnemiesArea1;
+    [HideInInspector] public bool RandomEnemiesArea2;
+
 
 
     public float PreviousDodgeTime { get; private set; } = Mathf.NegativeInfinity;
@@ -93,7 +99,7 @@ public class PlayerStateMachine : StateMachine, ISaveable
 
     private void HandleHealthIncrease() 
     {
-        SwitchState(new PlayerGetsSpellPower(this)); 
+        SwitchState(new PlayerGetsHealth(this)); 
     }
 
 
@@ -165,17 +171,7 @@ public class PlayerStateMachine : StateMachine, ISaveable
        
     }
 
-    public object CaptureState()
-    {
-        return new SerializableVector3(transform.position);
-    }
-
-    public void RestoreState(object state)
-    {
-        SerializableVector3 position = (SerializableVector3)state;
-        transform.position = position.ToVector();
-    }
-
+    
     public void DestroyObjectOnDeath()
     {
         Destroy(this);

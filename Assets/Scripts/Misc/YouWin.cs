@@ -9,13 +9,15 @@ public class YouWin : MonoBehaviour
 
     public PlayerStateMachine stateMachine;
     private const float CrossFadeDuration = 0.1f;
-
+    
     private void OnTriggerEnter(Collider other)
     {
 
         if (other.gameObject.CompareTag("Player"))
         {
+            
             stateMachine.Animator.CrossFadeInFixedTime(FloatingHash, CrossFadeDuration);
+            AudioManager.Instance.Play("portal");
             Invoke("Delay", 3f);
 
         }

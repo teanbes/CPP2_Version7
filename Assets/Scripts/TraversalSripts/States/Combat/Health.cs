@@ -65,8 +65,11 @@ public class Health : MonoBehaviour
 
         health = Mathf.Max(health + healthUp, 0);
 
+        if (health >= 100) { health = 100; }
+
         OnIncreaseHealth?.Invoke();
 
+        Debug.Log("player health" + health);
 
         HealthBarHandler();
     }

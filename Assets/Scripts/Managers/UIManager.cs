@@ -11,17 +11,22 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     [Header("Button")]
-    public Button playButton;
-    public Button returnToMenuButton;
-    public Button quitButton;
-    public Button continueButton;
+    [SerializeField] private Button playButton;
+    [SerializeField] private Button returnToMenuButton;
+    [SerializeField] private Button quitButton;
+    [SerializeField] private Button continueButton;
 
     [Header("Pause Elements")]
-    public GameObject pausePanel;
-    public GameObject gameOverPanel;
+    [SerializeField] private GameObject pausePanel;
+    [SerializeField] private GameObject gameOverPanel;
     private bool gamePaused;
     private PlayerStateMachine cRef;
     private EnemyStateMachine eRef;
+
+    [Header("Audio Elements")]
+    [SerializeField] private AudioSource backgroundMusic1;
+    [SerializeField] private AudioSource backgroundMusic2;
+
 
 
 
@@ -29,13 +34,14 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         if (SceneManager.GetActiveScene().buildIndex == 1 )
         {
             cRef = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStateMachine>();
 
         
             //Invoke("GetPlayerCOmponents", 1f);
-            eRef = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyStateMachine>();
+            //eRef = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyStateMachine>();
 
         }
 
@@ -54,6 +60,13 @@ public class UIManager : MonoBehaviour
 
         if (continueButton)
             quitButton.onClick.AddListener(ContinueFromSave);
+
+        if (!backgroundMusic1)
+            Debug.Log("Please set Background music file 1");
+
+        if (!backgroundMusic2)
+            Debug.Log("Please set Background music file 2");
+
 
 
 
@@ -121,15 +134,23 @@ public class UIManager : MonoBehaviour
         pausePanel.SetActive(gamePaused);
 
         if (gamePaused)
+        {
             Time.timeScale = 0;
+            PauseBackgorundMusic();
+        }
+            
         else
+        {
             Time.timeScale = 1;
+            UnpauseBackgorundMusic();
+
+        }
     }
 
     public void SaveGame()
     {
         cRef.SaveGamePrepare();
-        eRef.SaveGamePrepare();
+        //eRef.SaveGamePrepare();
 
         GameManager.Instance.SaveGame();
     }
@@ -141,4 +162,19 @@ public class UIManager : MonoBehaviour
 
         GameManager.Instance.LoadGame();
     }
+
+    public void PauseBackgorundMusic()
+    {
+        backgroundMusic1.Pause();
+        backgroundMusic2.Pause();
+    }
+
+    public void UnpauseBackgorundMusic()
+    {
+        backgroundMusic1.UnPause();
+        backgroundMusic2.UnPause();
+    }
+
+
+
 }

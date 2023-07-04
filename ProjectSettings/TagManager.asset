@@ -14,6 +14,9 @@ TagManager:
   - Fire
   - FireCollider
   - Enemy
+  - FxTemporaire
+  - Ground
+  - SwordCollider
   layers:
   - Default
   - TransparentFX

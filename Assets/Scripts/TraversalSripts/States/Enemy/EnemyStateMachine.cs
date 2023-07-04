@@ -22,18 +22,23 @@ public class EnemyStateMachine : StateMachine
     [field: SerializeField] public int AttackKnockback { get; private set; }
     [field: SerializeField] public GameObject DeathParticles { get; private set; }
 
-    //Vars for anemy path
+    // Enemy Type: Follow or Patrol
+    [field: SerializeField] public bool IsPatrolling { get; private set; }
+
+
+    // Vars for anemy path
     [field: SerializeField] public Transform PathTarget;
     [field: SerializeField] public GameObject[] Path { get; private set; }
     [field: SerializeField] public int PathIndex;
     [field: SerializeField] public float DistThreshhold { get; private set; }
 
-    //PowerUps
+    // PowerUps
     [field: SerializeField] public GameObject[] collectibles;
     Vector3 currentEulerAngles;
     Quaternion currentRotation;
     public bool enemyDead = false;
 
+    // Save Data vars
     public Health player;
     public int enemyID;
     public int health;
@@ -45,23 +50,28 @@ public class EnemyStateMachine : StateMachine
         // Store the InstanceID
         enemyID = GetInstanceID();
 
-        //player = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
-        Invoke("GetPlayerCOmponents", 2f);
+        // Get Components
+        // player = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
+        Invoke("GetPlayerComponents", 2f);
         
 
-        //looks for empty gameobjects to set the path
+        // looks for empty gameobjects to set the path
         if (Path.Length <= 0) Path = GameObject.FindGameObjectsWithTag("Patrol");
 
-        //Aproximation for path, almost never reaches 0 because of float calculations
+        // Aproximation for path, almost never reaches 0 because of float calculations
         if (DistThreshhold <= 0) DistThreshhold = 0.5f;
 
         Agent.updatePosition = false;
         Agent.updateRotation = false;
 
-        SwitchState(new EnemyPatrollingState(this));
+        if (!IsPatrolling)
+            SwitchState(new EnemyIdleState(this));
+        if (IsPatrolling)
+            SwitchState(new EnemyPatrollingState(this));
+        
     }
    
-    private void GetPlayerCOmponents()
+    private void GetPlayerComponents()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
     }
@@ -148,7 +158,7 @@ public class EnemyStateMachine : StateMachine
         data.posRotScale.scaleY = transform.localScale.y;
         data.posRotScale.scaleZ = transform.localScale.z;
 
-        //Add enemy to Game State
+        // Add enemy to Game State
         GameManager.StateManager.gameState.enemies.Add(data);
     }
 

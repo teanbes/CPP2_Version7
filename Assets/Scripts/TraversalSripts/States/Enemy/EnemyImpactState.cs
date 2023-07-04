@@ -14,7 +14,9 @@ public class EnemyImpactState : EnemyBaseState
 
     public override void Enter()
     {
+        AudioManager.Instance.Play("hit");
         stateMachine.Animator.CrossFadeInFixedTime(ImpactHash, CrossFadeDuration);
+
     }
 
     public override void Tick(float deltaTime)

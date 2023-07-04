@@ -127,3 +127,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45bf2f3b4d7935543b432a73094cc36d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myCollider: {fileID: 8272669529950256580, guid: 19d17cb443d3cf34fad9b5f1951af52b, type: 3}
+  explosionEffect: {fileID: 100004, guid: b46890100828db6429ff69c322b45893, type: 3}

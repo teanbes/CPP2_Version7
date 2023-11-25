@@ -49,9 +49,9 @@ public class PlayerStateMachine : StateMachine
         // Initial weapon state
         isWeapon = false;
         // Initial spell state
-        isSpell = false;
+        isSpell = true;
         // Initial combo state
-        isCombo = false;
+        isCombo = true;
         // Initial player state
         isSaved = GameManager.StateManager.gameState.player.isSaved;
 
